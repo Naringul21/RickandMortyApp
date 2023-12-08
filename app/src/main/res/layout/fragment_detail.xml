@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/layout_background"
+    tools:context=".presentation.view.DetailFragment">
+
+    <ImageView
+        android:id="@+id/detail_back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="@id/cardview_detail"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/detail_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:fontFamily="@font/irish_grover"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:textSize="44sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview_detail"
+        android:layout_width="360dp"
+        android:layout_height="330dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/detail_name"
+        android:layout_marginTop="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp">
+    <ImageView
+        android:id="@+id/detail_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="center"/>
+    </androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/txt_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Gender:"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@id/cardview_detail"
+        app:layout_constraintTop_toBottomOf="@id/cardview_detail" />
+
+    <TextView
+        android:id="@+id/detail_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/inter_medium"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/txt_gender"
+        app:layout_constraintTop_toBottomOf="@id/cardview_detail" />
+
+    <TextView
+        android:id="@+id/txt_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Status:"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@id/cardview_detail"
+        app:layout_constraintTop_toBottomOf="@id/detail_gender" />
+
+    <TextView
+        android:id="@+id/detail_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/inter_medium"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/txt_status"
+        app:layout_constraintTop_toBottomOf="@id/txt_gender" />
+
+    <TextView
+        android:id="@+id/txt_species"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Species:"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@id/cardview_detail"
+        app:layout_constraintTop_toBottomOf="@id/txt_status" />
+
+    <TextView
+        android:id="@+id/detail_species"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/inter_medium"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/txt_species"
+        app:layout_constraintTop_toBottomOf="@id/txt_status" />
+
+    <TextView
+        android:id="@+id/txt_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Type:"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@id/cardview_detail"
+        app:layout_constraintTop_toBottomOf="@id/txt_species" />
+
+    <TextView
+        android:id="@+id/detail_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/inter_medium"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/txt_type"
+        app:layout_constraintTop_toBottomOf="@id/txt_species" />
+
+    <TextView
+        android:id="@+id/txt_origin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Origin:"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@id/cardview_detail"
+        app:layout_constraintTop_toBottomOf="@id/txt_type" />
+
+    <TextView
+        android:id="@+id/detail_origin"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/inter_medium"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/txt_origin"
+        app:layout_constraintTop_toBottomOf="@id/txt_type" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
