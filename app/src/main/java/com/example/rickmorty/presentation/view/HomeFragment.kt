@@ -1,6 +1,7 @@
 package com.example.rickmorty.presentation.view
 
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
@@ -15,6 +16,7 @@ import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.paging.DifferCallback
 import androidx.recyclerview.widget.DiffUtil
@@ -42,6 +44,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     }
 
     private var query: String = ""
+    private var status_type = ""
+    private var gender_type = ""
+
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,15 +58,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
         setClickListener()
         homeViewModel.getCharacters()
 
-        val gender = resources.getStringArray(R.array.gender)
-        val arrayAdapter = ArrayAdapter(requireActivity(), R.layout.dropdown_item, gender)
-        binding.autoCompleteTextViewGender.setAdapter(arrayAdapter)
-
-        val status = resources.getStringArray(R.array.status)
-        val arrayAdapterStatus = ArrayAdapter(requireActivity(), R.layout.dropdown_item, status)
-        binding.autoCompleteTextViewStatus.setAdapter(arrayAdapterStatus)
+        filterData()
 
         getNameSearchView()
+
+        val animation =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+        sharedElementEnterTransition = animation
+
+
 
     }
 
@@ -67,8 +74,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     private fun setViewModelObservers() = lifecycleScope.launch {
         lifecycleScope.launch {
             homeViewModel.characterPagingData
-                .flowWithLifecycle(lifecycle).
-                collectLatest {
+                .flowWithLifecycle(lifecycle).collectLatest {
                     characterAdapter.submitData(viewLifecycleOwner.lifecycle, it)
                 }
         }
@@ -76,11 +82,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     }
 
     private fun setClickListener() {
-        characterAdapter.onItemClickListener = {
+        characterAdapter.onItemClickListener = {data, img->
+
+            val extras= FragmentNavigatorExtras(
+                img to data.image!!
+            )
             findNavController().navigate(
-                HomeFragmentDirections.actionHomeFragmentToDetailFragment(it)
+                HomeFragmentDirections.actionHomeFragmentToDetailFragment(data), extras
 
             )
+            }
+        postponeEnterTransition()
+        binding.recyclerView.doOnPreDraw {
+            startPostponedEnterTransition()
         }
     }
 
@@ -100,6 +114,68 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
         })
     }
 
+    override fun onResume() {
+        super.onResume()
 
+        val gender = resources.getStringArray(R.array.gender)
+        binding.autoCompleteTextViewGender.setAdapter(null)
+        val genderAdapter = ArrayAdapter(requireActivity(), R.layout.dropdown_item, gender)
+        binding.autoCompleteTextViewGender.setAdapter(genderAdapter)
+
+
+        val status = resources.getStringArray(R.array.status)
+        binding.autoCompleteTextViewStatus.setAdapter(null)
+        val statusAdapter = ArrayAdapter(requireActivity(), R.layout.dropdown_item, status)
+        binding.autoCompleteTextViewStatus.setAdapter(statusAdapter)
+    }
+
+    private fun filterData() {
+        val genders = resources.getStringArray(R.array.gender)
+        val genderAdapter = ArrayAdapter(requireActivity(), R.layout.dropdown_item, genders)
+
+        binding.autoCompleteTextViewGender.setOnItemClickListener { adapterView, view, position, l ->
+            gender_type = genders[position]
+            if (gender_type == "all") {
+                gender_type = ""
+                homeViewModel.getFilteredCharacters(
+                    name = binding.searchView.toString(),
+                    gender_type,
+                    status_type
+                )
+            } else {
+                homeViewModel.getFilteredCharacters(
+                    name = binding.searchView.toString(),
+                    gender_type,
+                    status_type
+                )
+            }
+
+        }
+
+        binding.autoCompleteTextViewGender.setAdapter(genderAdapter)
+
+
+        val status = resources.getStringArray(R.array.status)
+        val statusAdapter = ArrayAdapter(requireActivity(), R.layout.dropdown_item, status)
+        binding.autoCompleteTextViewStatus.setOnItemClickListener { adapterView, view, position, l ->
+            status_type = status[position]
+            if (status_type == "all") {
+                status_type = ""
+                homeViewModel.getFilteredCharacters(
+                    name = binding.searchView.toString(),
+                    gender_type,
+                    status_type
+                )
+            } else {
+                homeViewModel.getFilteredCharacters(
+                    name = binding.searchView.toString(),
+                    gender_type,
+                    status_type
+                )
+            }}
+
+        binding.autoCompleteTextViewStatus.setAdapter(statusAdapter)
+
+    }
 }
 

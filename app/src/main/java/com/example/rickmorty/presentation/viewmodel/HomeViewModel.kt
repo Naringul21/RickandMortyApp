@@ -23,7 +23,7 @@ class HomeViewModel @Inject constructor(val repo: MyRepository) : ViewModel() {
     }.launchIn(viewModelScope)
 
 
-    fun getFilteredCharacters(name: String = "", gender: String = "", status: String = "") =
+    fun getFilteredCharacters(name: String="" , gender: String="" , status: String="" ) =
         repo.getFilteredRickMorty(name, gender, status).onEach {
             _characterPagingData.value = it
         }

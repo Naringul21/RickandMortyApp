@@ -1,6 +1,7 @@
 package com.example.rickmorty.presentation.view
 
 import android.os.Bundle
+import android.transition.TransitionInflater
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.example.rickmorty.R
 import com.example.rickmorty.databinding.FragmentDetailBinding
 import com.example.rickmorty.utils.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class DetailFragment : BaseFragment<FragmentDetailBinding>
@@ -30,6 +32,11 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>
     }
 
     private fun FragmentDetailBinding.setupViews() {
+        binding.detailImg.transitionName=args.characters.image
+        val animation =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+        sharedElementEnterTransition = animation
+        postponeEnterTransition(200, TimeUnit.MILLISECONDS)
         val characters = args.characters
         detailName.text = characters.name
         detailGender.text = characters.gender

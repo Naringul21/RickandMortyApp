@@ -72,52 +72,39 @@
 <!--        app:layout_constraintTop_toBottomOf="@id/search_view" />-->
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/gender_type"
+        android:id="@+id/gender_spinner"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginTop="10dp"
-        android:hint="Gender Type"
-        app:hintTextColor="@color/black"
+        app:hintEnabled="false"
         app:layout_constraintStart_toStartOf="@id/search_view"
-        app:layout_constraintTop_toBottomOf="@+id/search_view">
+        app:layout_constraintTop_toBottomOf="@+id/search_view"
+        app:boxStrokeColor="@color/white">
 
         <AutoCompleteTextView
             android:id="@+id/autoCompleteTextView_gender"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:hint="Gender Type"
+            android:textColorHint="@color/white"
             android:inputType="none"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
-<!--    <TextView-->
-<!--        android:id="@+id/status"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="32dp"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        android:layout_marginEnd="32dp"-->
-<!--        android:text="Status"-->
-<!--        android:drawableEnd="@drawable/baseline_keyboard_arrow_down_24"-->
-<!--        android:textColor="#6B007C"-->
-<!--        android:background="@drawable/searchview_background"-->
-<!--        android:textSize="16sp"-->
-<!--        android:padding="5dp"-->
-<!--        android:fontFamily="@font/inter_medium"-->
-<!--        app:layout_constraintStart_toEndOf="@id/gender_type"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/search_view" />-->
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/status"
+        android:id="@+id/spinner_status"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Status"
+        app:hintEnabled="false"
         app:hintTextColor="@color/black"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
+        app:boxStrokeColor="@color/white"
         app:layout_constraintEnd_toEndOf="@id/search_view"
         app:layout_constraintTop_toBottomOf="@+id/search_view">
 
@@ -125,6 +112,8 @@
             android:id="@+id/autoCompleteTextView_status"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
+            android:hint="Status"
+            android:textColorHint="@color/white"
             android:layout_weight="1"
             android:inputType="none"/>
 
@@ -140,7 +129,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/gender_type"
+        app:layout_constraintTop_toBottomOf="@id/gender_spinner"
         android:padding="10dp"
         android:layout_marginTop="5dp"/>
 

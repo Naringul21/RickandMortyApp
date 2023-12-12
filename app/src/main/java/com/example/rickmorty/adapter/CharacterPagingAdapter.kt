@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.ImageView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -26,9 +27,9 @@ class CharacterPagingAdapter() : PagingDataAdapter<Result, CharacterPagingAdapte
             binding.name.text = data.name
             binding.species.text = data.species
             Glide.with(binding.root).load(data.image).into(binding.homeImage)
-
+            binding.homeImage.transitionName=data.image
             binding.root.setOnClickListener {
-                onItemClickListener(data)
+                onItemClickListener(data, binding.homeImage)
             }
         }
 
@@ -50,7 +51,7 @@ class CharacterPagingAdapter() : PagingDataAdapter<Result, CharacterPagingAdapte
     }
 
 
-    var onItemClickListener: ((Result) -> Unit) = {}
+    lateinit var onItemClickListener: (Result, ImageView) -> Unit
 
 
 
