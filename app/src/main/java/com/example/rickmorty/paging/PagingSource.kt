@@ -19,14 +19,19 @@ class PagingSource (private val characterApi: CharacterApi,
         return try {
             val currentPage = params.key ?: 1
             val response = characterApi.getData(currentPage, name, status, gender)
-            val responseData = mutableListOf<Result>()
-            val data = response.body()
-            data?.let { responseData.addAll(it.results)}
-            LoadResult.Page(
-                data = responseData,
-                prevKey = if (currentPage == 1) null else -1 ,
-                nextKey = currentPage.plus(1)
-            )
+            if (response.isSuccessful) {
+                val responseData = mutableListOf<Result>()
+                val data = response.body()
+                data?.let { responseData.addAll(it.results)}
+                LoadResult.Page(
+                    data = responseData,
+                    prevKey = if (currentPage == 1) null else -1 ,
+                    nextKey = currentPage.plus(1)
+                )
+            } else{
+                LoadResult.Error(Throwable("nothing"))
+            }
+
         } catch (e: Exception) {
             LoadResult.Error(e)
 

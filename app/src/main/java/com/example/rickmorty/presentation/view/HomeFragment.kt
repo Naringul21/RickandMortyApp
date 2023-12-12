@@ -24,12 +24,15 @@ import com.example.rickmorty.R
 import com.example.rickmorty.adapter.CharacterPagingAdapter
 import com.example.rickmorty.databinding.FragmentHomeBinding
 import com.example.rickmorty.network.model.Result
+import com.example.rickmorty.presentation.viewmodel.GenderType
 import com.example.rickmorty.presentation.viewmodel.HomeViewModel
 import com.example.rickmorty.utils.BaseFragment
 import com.example.rickmorty.utils.Resource
 import com.google.gson.internal.bind.ArrayTypeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -46,8 +49,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     private var query: String = ""
     private var status_type = ""
     private var gender_type = ""
-
-
+    private val name = ""
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -67,7 +69,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
         sharedElementEnterTransition = animation
 
 
-
     }
 
 
@@ -79,19 +80,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                 }
         }
 
+        homeViewModel.filterState.flowWithLifecycle(lifecycle).onEach {
+            homeViewModel.getFilteredCharacters(
+                name,
+                gender = it.gender,
+                status = it.status
+            )
+        }.launchIn(lifecycleScope)
+
     }
 
     private fun setClickListener() {
-        characterAdapter.onItemClickListener = {data, img->
+        characterAdapter.onItemClickListener = { data, img ->
 
-            val extras= FragmentNavigatorExtras(
+            val extras = FragmentNavigatorExtras(
                 img to data.image!!
             )
             findNavController().navigate(
                 HomeFragmentDirections.actionHomeFragmentToDetailFragment(data), extras
 
             )
-            }
+        }
         postponeEnterTransition()
         binding.recyclerView.doOnPreDraw {
             startPostponedEnterTransition()
@@ -134,25 +143,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
         val genderAdapter = ArrayAdapter(requireActivity(), R.layout.dropdown_item, genders)
 
         binding.autoCompleteTextViewGender.setOnItemClickListener { adapterView, view, position, l ->
-            gender_type = genders[position]
-            if (gender_type == "all") {
-                gender_type = ""
-                homeViewModel.getFilteredCharacters(
-                    name = binding.searchView.toString(),
-                    gender_type,
-                    status_type
-                )
-            } else {
-                homeViewModel.getFilteredCharacters(
-                    name = binding.searchView.toString(),
-                    gender_type,
-                    status_type
-                )
-            }
-
+            homeViewModel.updateFilterState(
+                gender = GenderType.from(genders[position])
+            )
         }
 
         binding.autoCompleteTextViewGender.setAdapter(genderAdapter)
+        setViewModelObservers()
 
 
         val status = resources.getStringArray(R.array.status)
@@ -162,19 +159,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
             if (status_type == "all") {
                 status_type = ""
                 homeViewModel.getFilteredCharacters(
-                    name = binding.searchView.toString(),
-                    gender_type,
-                    status_type
+                    name,
+                    status_type,
+                    gender_type
                 )
             } else {
                 homeViewModel.getFilteredCharacters(
-                    name = binding.searchView.toString(),
+                    name,
                     gender_type,
                     status_type
                 )
-            }}
+            }
+        }
 
         binding.autoCompleteTextViewStatus.setAdapter(statusAdapter)
+        setViewModelObservers()
 
     }
 }

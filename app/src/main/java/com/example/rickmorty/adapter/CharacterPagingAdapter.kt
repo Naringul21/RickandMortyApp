@@ -9,6 +9,7 @@ import android.widget.ImageView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.rickmorty.R
 import com.example.rickmorty.databinding.RvItemsBinding
 import com.example.rickmorty.network.model.Result
 import com.example.rickmorty.utils.GenericDiffUtil
@@ -27,12 +28,31 @@ class CharacterPagingAdapter() : PagingDataAdapter<Result, CharacterPagingAdapte
             binding.name.text = data.name
             binding.species.text = data.species
             Glide.with(binding.root).load(data.image).into(binding.homeImage)
-            binding.homeImage.transitionName=data.image
+            binding.homeImage.transitionName = data.image
             binding.root.setOnClickListener {
                 onItemClickListener(data, binding.homeImage)
             }
-        }
 
+
+            when (data.gender) {
+                "Female" -> {
+                    binding.icImg.setImageResource(R.drawable.ic_female)
+
+                }
+
+                "Male" -> {
+                    binding.icImg.setImageResource(R.drawable.ic_male)
+                }
+
+                "Genderless" -> {
+                    binding.icImg.setImageResource(R.drawable.ic_genderless)
+                }
+
+                "unknown" -> {
+                    binding.icImg.setImageResource(R.drawable.ic_unknown)
+                }
+            }
+        }
     }
 
 

@@ -18,6 +18,14 @@
         android:layout_width="160dp"
         android:scaleType="center"
         android:layout_height="150dp"/>
+
+        <ImageView
+            android:id="@+id/ic_img"
+            android:layout_width="30dp"
+            android:scaleType="center"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="10dp"
+            android:layout_height="30dp"/>
     </androidx.cardview.widget.CardView>
 
     <TextView
