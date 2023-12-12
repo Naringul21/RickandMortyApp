@@ -15,4 +15,11 @@ class MyRepository @Inject constructor( val api: CharacterApi) {
         ), pagingSourceFactory = { PagingSource(api) }
     ).flow
 
+    fun getFilteredRickMorty(name: String="", gender :String="", status: String="")= Pager(
+        config = PagingConfig(
+            pageSize = 20,
+            maxSize = 200
+        ), pagingSourceFactory = { PagingSource(api, name,gender, status ) }
+    ).flow
+
 }

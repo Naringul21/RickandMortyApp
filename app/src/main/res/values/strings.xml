@@ -2,5 +2,16 @@
     <string name="app_name">Rick &amp; Morty</string>
     <!-- TODO: Remove or change this placeholder text -->
 
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Genderless</item>
+        <item>Unknown</item>
+    </string-array>
 
+    <string-array name="status">
+        <item>Alive</item>
+        <item>Dead</item>
+        <item>Unknown</item>
+    </string-array>
 </resources>

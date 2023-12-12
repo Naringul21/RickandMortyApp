@@ -11,7 +11,12 @@ interface CharacterApi {
 
     @GET("character")
     suspend fun getData(
-        @Query("page") page: Int = 42,
-        @Query("name") name:String=""
+        @Query("page") page: Int,
+        @Query("name") name: String = "",
+        @Query("status") status: String = "",
+        @Query("gender") gender: String = ""
     ): Response<RickandMorty>
+
+
+
 }

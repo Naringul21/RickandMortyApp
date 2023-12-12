@@ -6,7 +6,10 @@ import androidx.paging.PagingState
 import com.example.rickmorty.network.model.Result
 import com.example.rickmorty.network.model.service.CharacterApi
 
-class PagingSource (private val characterApi: CharacterApi) : PagingSource<Int, Result>() {
+class PagingSource (private val characterApi: CharacterApi,
+                    val name: String = "",
+                    val status: String = "",
+                    val gender: String = "") : PagingSource<Int, Result>() {
     override fun getRefreshKey(state: PagingState<Int, Result>): Int? {
         return state.anchorPosition
     }
@@ -15,7 +18,7 @@ class PagingSource (private val characterApi: CharacterApi) : PagingSource<Int, 
 
         return try {
             val currentPage = params.key ?: 1
-            val response = characterApi.getData(currentPage)
+            val response = characterApi.getData(currentPage, name, status, gender)
             val responseData = mutableListOf<Result>()
             val data = response.body()
             data?.let { responseData.addAll(it.results)}

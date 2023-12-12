@@ -3,22 +3,21 @@ package com.example.rickmorty.adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
 import android.widget.Filterable
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.rickmorty.databinding.RvItemsBinding
 import com.example.rickmorty.network.model.Result
 import com.example.rickmorty.utils.GenericDiffUtil
+import kotlinx.coroutines.flow.Flow
 
 class CharacterPagingAdapter() : PagingDataAdapter<Result, CharacterPagingAdapter.MyViewHolder>(
     GenericDiffUtil(
     myItemsTheSame = { oldItem, newItem -> oldItem.id == newItem.id },
     myContentsTheSame = { oldItem, newItem -> oldItem == newItem }
 )) {
-
 
 
     inner class MyViewHolder(private val binding: RvItemsBinding) :
@@ -34,7 +33,6 @@ class CharacterPagingAdapter() : PagingDataAdapter<Result, CharacterPagingAdapte
         }
 
     }
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -53,6 +51,7 @@ class CharacterPagingAdapter() : PagingDataAdapter<Result, CharacterPagingAdapte
 
 
     var onItemClickListener: ((Result) -> Unit) = {}
+
 
 
 }
