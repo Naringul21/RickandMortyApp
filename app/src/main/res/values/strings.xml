@@ -11,6 +11,7 @@
     </string-array>
 
     <string-array name="status">
+        <item>All</item>
         <item>Alive</item>
         <item>Dead</item>
         <item>Unknown</item>

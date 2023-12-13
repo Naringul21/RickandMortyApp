@@ -22,49 +22,67 @@ class HomeViewModel @Inject constructor(val repo: MyRepository) : ViewModel() {
 
     private val _filterState = MutableStateFlow<FilterState>(FilterState())
     val filterState = _filterState.asStateFlow()
+
+    init {
+        getCharacters()
+    }
+
     fun getCharacters() = repo.getRickMorty().onEach {
         _characterPagingData.value = it
     }.launchIn(viewModelScope)
 
 
-   fun updateFilterState(gender: GenderType = GenderType.ALL, status: StatusType = StatusType.ALL ){
-       _filterState.update {
-           it.copy(
-               gender = gender, status = status
-           )
-       }
-   }
+    fun updateFilterState(
+        name: String = "",
+        status: StatusType = StatusType.ALL,
+        gender: GenderType = GenderType.ALL,
+    ) {
+        _filterState.update {
+            it.copy(
+                name = null, status = status, gender = gender
+            )
+        }
+    }
 
-    fun getFilteredCharacters(name: String="", gender: GenderType = GenderType.ALL, status: StatusType = StatusType.ALL ) =
+    fun getFilteredCharacters(
+        name: String = "",
+        status: StatusType = StatusType.ALL,
+        gender: GenderType = GenderType.ALL
+    ) =
         repo.getFilteredRickMorty(name, status.statusName, gender.genderName).onEach {
             _characterPagingData.value = it
-        }
-            .launchIn(viewModelScope)
+        }.launchIn(viewModelScope)
 
 
 }
 
 data class FilterState(
-    val name: String?=null,
-    val gender: GenderType=GenderType.ALL,
-    val status: StatusType = StatusType.ALL
+    val name: String? = null,
+    val status: StatusType = StatusType.ALL,
+    val gender: GenderType = GenderType.ALL
 )
 
-enum class StatusType(val statusName: String){
-    ALL("all"),
+enum class StatusType(val statusName: String) {
+    ALL(" "),
     ALIVE("alive"),
     DEAD("dead"),
-    UNKNOWN("unknown")
+    UNKNOWN("unknown");
+
+    companion object {
+        fun from(value: String) =
+            values().find { it.statusName.lowercase() == value.lowercase() } ?: ALL
+    }
 }
 
-enum class GenderType(val genderName: String){
-    ALL("all"),
+enum class GenderType(val genderName: String) {
+    ALL(" "),
     MALE("male"),
     FEMALE("female"),
     UNKNOWN("unknown"),
     GENDERLESS("genderless");
 
-    companion object{
-        fun from(value: String) = values().find { it.genderName.lowercase() == value.lowercase() } ?: ALL
+    companion object {
+        fun from(value: String) =
+            values().find { it.genderName.lowercase() == value.lowercase() } ?: ALL
     }
 }

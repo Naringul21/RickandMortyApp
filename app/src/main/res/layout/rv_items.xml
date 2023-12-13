@@ -4,29 +4,28 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp">
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/home_image"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Small"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="10dp">
-    <ImageView
-        android:id="@+id/home_image"
-        android:layout_width="160dp"
-        android:scaleType="center"
-        android:layout_height="150dp"/>
+        android:scaleType="center" />
 
         <ImageView
             android:id="@+id/ic_img"
             android:layout_width="30dp"
             android:scaleType="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="135dp"
+            app:layout_goneMarginTop="15dp"
             android:layout_marginStart="120dp"
             android:layout_marginTop="10dp"
             android:layout_height="30dp"/>
-    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/name"
@@ -37,9 +36,9 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@id/cardview"
-        app:layout_constraintStart_toStartOf="@id/cardview"
-        app:layout_constraintTop_toBottomOf="@id/cardview" />
+        app:layout_constraintEnd_toEndOf="@id/home_image"
+        app:layout_constraintStart_toStartOf="@id/home_image"
+        app:layout_constraintTop_toBottomOf="@id/home_image" />
 
     <TextView
         android:id="@+id/species"
@@ -50,8 +49,8 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@id/cardview"
-        app:layout_constraintStart_toStartOf="@id/cardview"
+        app:layout_constraintEnd_toEndOf="@id/home_image"
+        app:layout_constraintStart_toStartOf="@id/home_image"
         app:layout_constraintTop_toBottomOf="@id/name" />
 
 

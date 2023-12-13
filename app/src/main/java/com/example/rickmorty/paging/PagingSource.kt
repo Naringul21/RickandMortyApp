@@ -23,12 +23,16 @@ class PagingSource (private val characterApi: CharacterApi,
                 val responseData = mutableListOf<Result>()
                 val data = response.body()
                 data?.let { responseData.addAll(it.results)}
+                Log.e("PagingSource", "Sucsess $data")
+
                 LoadResult.Page(
                     data = responseData,
                     prevKey = if (currentPage == 1) null else -1 ,
                     nextKey = currentPage.plus(1)
                 )
+
             } else{
+                Log.e("PagingSource", "Error")
                 LoadResult.Error(Throwable("nothing"))
             }
 

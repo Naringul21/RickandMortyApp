@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="42dp"
         android:src="@drawable/ic_back"
-        app:layout_constraintStart_toStartOf="@id/cardview_detail"
+        app:layout_constraintStart_toStartOf="@id/detail_img"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -29,22 +29,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardview_detail"
-        android:layout_width="360dp"
-        android:layout_height="330dp"
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/detail_img"
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        android:scaleType="center"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/detail_name"
         android:layout_marginTop="10dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="10dp">
-    <ImageView
-        android:id="@+id/detail_img"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="center"/>
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toBottomOf="@id/detail_name" />
+
     <TextView
         android:id="@+id/txt_gender"
         android:layout_width="wrap_content"
@@ -54,8 +50,8 @@
         android:text="Gender:"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@id/cardview_detail"
-        app:layout_constraintTop_toBottomOf="@id/cardview_detail" />
+        app:layout_constraintStart_toStartOf="@id/detail_img"
+        app:layout_constraintTop_toBottomOf="@id/detail_img" />
 
     <TextView
         android:id="@+id/detail_gender"
@@ -67,7 +63,7 @@
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@id/txt_gender"
-        app:layout_constraintTop_toBottomOf="@id/cardview_detail" />
+        app:layout_constraintTop_toBottomOf="@id/detail_img" />
 
     <TextView
         android:id="@+id/txt_status"
@@ -78,7 +74,7 @@
         android:text="Status:"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@id/cardview_detail"
+        app:layout_constraintStart_toStartOf="@id/detail_img"
         app:layout_constraintTop_toBottomOf="@id/detail_gender" />
 
     <TextView
@@ -102,7 +98,7 @@
         android:text="Species:"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@id/cardview_detail"
+        app:layout_constraintStart_toStartOf="@id/detail_img"
         app:layout_constraintTop_toBottomOf="@id/txt_status" />
 
     <TextView
@@ -126,7 +122,7 @@
         android:text="Type:"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@id/cardview_detail"
+        app:layout_constraintStart_toStartOf="@id/detail_img"
         app:layout_constraintTop_toBottomOf="@id/txt_species" />
 
     <TextView
@@ -150,7 +146,7 @@
         android:text="Origin:"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@id/cardview_detail"
+        app:layout_constraintStart_toStartOf="@id/detail_img"
         app:layout_constraintTop_toBottomOf="@id/txt_type" />
 
     <TextView

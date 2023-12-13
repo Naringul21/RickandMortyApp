@@ -26,6 +26,7 @@ import com.example.rickmorty.databinding.FragmentHomeBinding
 import com.example.rickmorty.network.model.Result
 import com.example.rickmorty.presentation.viewmodel.GenderType
 import com.example.rickmorty.presentation.viewmodel.HomeViewModel
+import com.example.rickmorty.presentation.viewmodel.StatusType
 import com.example.rickmorty.utils.BaseFragment
 import com.example.rickmorty.utils.Resource
 import com.google.gson.internal.bind.ArrayTypeAdapter
@@ -47,26 +48,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     }
 
     private var query: String = ""
-    private var status_type = ""
-    private var gender_type = ""
-    private val name = ""
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val animation =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+        sharedElementEnterTransition = animation
+
         binding.recyclerView.adapter = characterAdapter
         setViewModelObservers()
         setClickListener()
-        homeViewModel.getCharacters()
+//        homeViewModel.getCharacters()
 
         filterData()
 
         getNameSearchView()
 
-        val animation =
-            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
-        sharedElementEnterTransition = animation
 
 
     }
@@ -82,9 +81,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
 
         homeViewModel.filterState.flowWithLifecycle(lifecycle).onEach {
             homeViewModel.getFilteredCharacters(
-                name,
-                gender = it.gender,
-                status = it.status
+                name = "",
+                status = it.status,
+                gender = it.gender
             )
         }.launchIn(lifecycleScope)
 
@@ -142,7 +141,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
         val genders = resources.getStringArray(R.array.gender)
         val genderAdapter = ArrayAdapter(requireActivity(), R.layout.dropdown_item, genders)
 
-        binding.autoCompleteTextViewGender.setOnItemClickListener { adapterView, view, position, l ->
+        binding.autoCompleteTextViewGender.setOnItemClickListener { _, _, position, _ ->
             homeViewModel.updateFilterState(
                 gender = GenderType.from(genders[position])
             )
@@ -154,23 +153,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
 
         val status = resources.getStringArray(R.array.status)
         val statusAdapter = ArrayAdapter(requireActivity(), R.layout.dropdown_item, status)
-        binding.autoCompleteTextViewStatus.setOnItemClickListener { adapterView, view, position, l ->
-            status_type = status[position]
-            if (status_type == "all") {
-                status_type = ""
-                homeViewModel.getFilteredCharacters(
-                    name,
-                    status_type,
-                    gender_type
-                )
-            } else {
-                homeViewModel.getFilteredCharacters(
-                    name,
-                    gender_type,
-                    status_type
-                )
+        binding.autoCompleteTextViewStatus.setOnItemClickListener { _, _, position, _ ->
+          homeViewModel.updateFilterState(
+              status=StatusType.from(status[position])
+          )
             }
-        }
 
         binding.autoCompleteTextViewStatus.setAdapter(statusAdapter)
         setViewModelObservers()
