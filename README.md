@@ -1,0 +1,1 @@
+In this app, we can click on the general list of characters to see their details. We can filter and search according to the parameters. I have used MVVM pattern, Paging3 library, Retrofit2, Shared Element Transition, Hilt DI, Flow and Live Data, Coroutines and etc.
